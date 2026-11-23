@@ -4,7 +4,7 @@ An interactive solar system explorer featuring a navigable 3D model, profiles fo
 
 ## Open the site
 
-On macOS, double-click `Open Orbit Atlas.command`. It starts a local-only web server on an available port and opens the site in your browser. Keep its Terminal window open while you explore; press Control-C there to stop it.
+From this folder, run `python3 serve.py`. It starts a local-only web server on an available port and opens the site in your browser. Keep its Terminal window open while you explore; press Control-C there to stop it. On macOS, you can also run the included launcher with `sh "Open Orbit Atlas.command"`.
 
 Or run a local web server from this folder:
 

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080d16" />
+    <meta name="description" content="Explore the solar system in 3D. Discover planetary worlds, their moons, and the missions exploring them." />
+    <title>Orbit Atlas — Explore the solar system</title>
+    <link rel="stylesheet" href="./styles.css?v=2" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./assets/vendor/three.module.js",
+          "three/addons/": "./assets/vendor/addons/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Orbit Atlas home"><span class="brand-mark" aria-hidden="true"><i></i></span><span>Orbit Atlas</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#explore">Explore</a>
+        <a href="#world-guide">Worlds</a>
+        <a href="#mission-guide">Missions</a>
+      </nav>
+      <a class="snapshot-link" href="#mission-guide"><span class="snapshot-dot"></span>Mission schedule <span>23 Nov 2026</span></a>
+    </header>
+
+    <main id="top">
+      <section class="hero" id="explore">
+        <div class="hero-copy-wrap">
+          <p class="eyebrow"><span>THE SOLAR SYSTEM</span><i></i> A CLOSER LOOK AT HOME</p>
+          <h1>Solar system,<br /><span>in motion.</span></h1>
+          <p class="hero-copy">Eight planets, one star, and the missions taking us farther. Explore each world, then follow the spacecraft on their way.</p>
+          <div class="hero-actions">
+            <a class="hero-action primary" href="#scene">Explore the system <span aria-hidden="true">↓</span></a>
+            <a class="hero-action secondary" href="#mission-guide">See upcoming missions <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="hero-index" aria-label="Eight planets, one star, and Earth's Moon">
+          <div><strong>08</strong><span>PLANETS</span></div>
+          <div><strong>01</strong><span>STAR</span></div>
+          <div class="hero-index-note">A star, eight planets,<br />and Earth’s Moon.</div>
+        </div>
+      </section>
+
+      <section class="explorer" id="scene" aria-label="Interactive three-dimensional solar system">
+        <div class="scene-toolbar">
+          <div class="scene-location"><span class="live-mark"></span><span id="focus-name">THE SOLAR SYSTEM</span></div>
+          <div class="scene-actions">
+            <button class="scene-control" id="labels-toggle" type="button" aria-pressed="false">Labels <span class="control-indicator"></span></button>
+            <button class="scene-control" id="motion-toggle" type="button" aria-label="Pause planetary motion">Pause <span class="motion-icon">Ⅱ</span></button>
+            <button class="scene-control" id="reset-view" type="button">Reset view <span aria-hidden="true">↺</span></button>
+          </div>
+        </div>
+        <div class="scene-wrap" id="scene-wrap">
+          <canvas id="solar-canvas" aria-label="Interactive 3D model of the Sun and planets. Drag to look around, scroll to zoom, or click a planet to select it."></canvas>
+          <div class="scene-kicker"><span>THE NEIGHBOURHOOD</span><span id="scene-world-type">ALL EIGHT PLANETS</span></div>
+          <div class="scene-instructions"><span>Drag to look</span><i></i><span>Click a world</span><i></i><span>Scroll to zoom</span></div>
+          <p class="scene-scale-note">Approximate orbits · illustrative scale</p>
+          <div class="scene-error" id="scene-error" hidden>The 3D model needs an internet connection to load. You can still use the planet guide and mission cards below.</div>
+        </div>
+        <div class="scene-footer">
+          <div class="world-picker-heading"><div><span class="section-label">EXPLORE A WORLD</span><span class="world-picker-hint">Select a world to highlight it and open its profile.</span></div><span class="world-picker-count">9 DESTINATIONS</span></div>
+          <div class="world-list" id="world-list" aria-label="Choose a planet or Earth's Moon"></div>
+          <div class="orbit-speed"><label for="speed-range">ORBIT SPEED</label><input id="speed-range" type="range" min="0" max="3" value="0.7" step="0.1" aria-label="Orbit speed" /><span id="speed-value">0.7×</span></div>
+        </div>
+      </section>
+
+      <section class="world-guide" id="world-guide" aria-labelledby="target-name">
+        <div class="world-heading">
+          <p class="eyebrow" id="target-kicker">TERRESTRIAL PLANET</p>
+          <div class="world-title-row"><h2 id="target-name">Earth</h2><span id="target-index">03</span></div>
+          <p class="world-summary" id="target-summary"></p>
+          <div class="world-question"><span class="question-icon" aria-hidden="true">✦</span><div><span class="section-label">SIGNATURE DETAIL</span><p id="target-highlight"></p></div></div>
+        </div>
+        <div class="world-data-card">
+          <div class="world-data-head"><div><span class="section-label">AT A GLANCE</span><span class="data-world-name" id="data-world-name">Earth</span></div><span class="data-mark" aria-hidden="true">↗</span></div>
+          <div class="world-facts" id="target-facts"></div>
+          <p class="world-data-note" id="world-data-note">A day is one spin. A year is one trip around the Sun. 1 AU is the average Earth–Sun distance.</p>
+        </div>
+      </section>
+
+      <section class="mission-guide" id="mission-guide" aria-labelledby="mission-heading">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span>HUMANITY’S REACH</span><i></i> NASA · ISRO · ESA · AND MORE</p><h2 id="mission-heading">Missions across worlds.</h2></div>
+          <p class="section-intro">Follow the spacecraft that have visited, are exploring or travelling now, and are planned to launch next.</p>
+        </div>
+        <div class="mission-board" aria-label="Counts of curated mission examples for the selected world">
+          <div class="mission-board-intro"><p class="section-label">MISSION INDEX <strong id="status-target">EARTH ORBIT</strong></p><p>Counts reflect the missions listed below: a selected guide, not a complete archive.</p></div>
+          <div class="mission-stats">
+            <article class="mission-stat past"><span class="stat-number" id="count-past">0</span><div><h3>Completed visits</h3><p>Mission at this destination is complete.</p></div></article>
+            <article class="mission-stat active"><span class="stat-number" id="count-active">0</span><div><h3>Active or en route</h3><p>Operating here or still travelling.</p></div></article>
+            <article class="mission-stat planned"><span class="stat-number" id="count-planned">0</span><div><h3>Planned missions</h3><p>Announced, awaiting launch.</p></div></article>
+          </div>
+          <p class="mission-scope-note">A spacecraft can appear under more than one world. Earth shows orbital missions; natural satellites are grouped with their primary world. Launch dates are agency targets and may change.</p>
+        </div>
+        <div class="mission-list-heading"><span class="section-label" id="mission-target">EARTH-ORBIT EXAMPLES</span><span id="mission-count">—</span></div>
+        <div class="mission-list" id="mission-list" aria-live="polite"></div>
+        <div class="no-missions" id="no-missions" hidden><span class="no-missions-mark" aria-hidden="true">✳</span><div><strong>No example cards for this world yet.</strong><p>This guide focuses on a small, sourced selection; a zero does not mean no mission has ever been proposed.</p></div></div>
+        <p class="schedule-note"><span aria-hidden="true">↗</span> Open a mission for its purpose, status, launch vehicle, partners, and official source.</p>
+      </section>
+
+      <section class="milestones" aria-labelledby="timeline-heading">
+        <div class="milestone-heading"><div><p class="eyebrow"><span>LOOKING AHEAD</span><i></i> TARGET DATES, NOT PROMISES</p><h2 id="timeline-heading">Upcoming missions &amp; events.</h2></div><div class="timeline-nav"><button id="timeline-back" type="button" aria-label="Scroll milestones left">←</button><button id="timeline-forward" type="button" aria-label="Scroll milestones right">→</button></div></div>
+        <div class="timeline-legend"><span><i class="legend-launch"></i>Planned launch</span><span><i class="legend-event"></i>Upcoming spacecraft event</span></div>
+        <div class="timeline-rail" id="timeline-rail"></div>
+        <p class="timeline-footnote">Schedule checked 23 November 2026. A spacecraft already in space can have future milestones too; those are marked as events, not launches.</p>
+      </section>
+
+      <section class="how-to-read" aria-label="About the 3D model">
+        <span class="section-label">ABOUT THIS MODEL</span>
+        <p>Planet starting positions use approximate NASA/JPL orbital elements. The paths retain approximate eccentricities and inclinations, but planet sizes are enlarged, distances are compressed unevenly, and the Moon’s orbit is widened so the system fits on screen. Motion is accelerated and simplified; this is not a live ephemeris or a gravity simulation. Fact cards use measured values.</p>
+        <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noreferrer">NASA planetary fact sheet ↗</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-top"><a class="footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i></span> Orbit Atlas</a><p>Our planetary neighbourhood, in perspective.</p><a class="back-top" href="#top">Back to top ↑</a></div>
+      <div class="footer-notes"><p>Mission descriptions link to the relevant agency or mission-team source. Schedule snapshot: 23 November 2026.</p><p>Planet surface textures: Solar System Scope, CC BY 4.0; derived from NASA elevation and imagery data.</p><a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">JPL orbit elements ↗</a><a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noreferrer">Texture credits ↗</a></div>
+    </footer>
+    <script type="module" src="./app.js?v=7"></script>
+  </body>
+</html>
